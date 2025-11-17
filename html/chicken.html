@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Chicken</title>
+    <link rel="stylesheet" href="../css/menu.css">
+</head>
+<body>
+
+    <head>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="farmer.html">Farmer</a></li>
+                <li><a href="coop.html">Chicken Coop</a></li>
+            </ul>
+        </nav>
+    </head>
+
+    <h1>Registrar Chicken</h1>
+
+    <form action="#" method="post">
+        <label for="name">Nombre del Chicken:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="color">Color:</label><br>
+        <input type="text" id="color" name="color" required><br><br>
+
+        <label for="age">Edad:</label><br>
+        <input type="number" id="age" name="age" min="0" required><br><br>
+
+        <label for="isMolting">¿Está mudando plumas?</label>
+        <input type="checkbox" id="isMolting" name="isMolting"><br><br>
+
+        <label for="coop_id">Pertenece al Chicken Coop:</label><br>
+        <select id="coop_id" name="coop_id" required>
+            <option value="">Seleccione un Coop</option>
+            <!-- Opciones se llenarán desde la base de datos -->
+        </select><br><br>
+
+        <button type="submit">Guardar Chicken</button>
+    </form>
+
+    <br>
+    <a href="coop.html">Volver a registrar Chicken Coop</a>
+</body>
+</html>
