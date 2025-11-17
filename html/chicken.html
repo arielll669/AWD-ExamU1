@@ -6,20 +6,17 @@
     <link rel="stylesheet" href="../css/menu.css">
 </head>
 <body>
-
-    <head>
-        <nav>
-            <ul>
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="farmer.html">Farmer</a></li>
-                <li><a href="coop.html">Chicken Coop</a></li>
-            </ul>
-        </nav>
-    </head>
+    <nav>
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="farmer.html">Farmer</a></li>
+            <li><a href="coop.html">Chicken Coop</a></li>
+        </ul>
+    </nav>
 
     <h1>Registrar Chicken</h1>
 
-    <form action="#" method="post">
+    <form id="chickenForm">
         <label for="name">Nombre del Chicken:</label><br>
         <input type="text" id="name" name="name" required><br><br>
 
@@ -35,7 +32,7 @@
         <label for="coop_id">Pertenece al Chicken Coop:</label><br>
         <select id="coop_id" name="coop_id" required>
             <option value="">Seleccione un Coop</option>
-            <!-- Opciones se llenarán desde la base de datos -->
+            <!-- Opciones se llenarán desde JS/Fetch -->
         </select><br><br>
 
         <button type="submit">Guardar Chicken</button>
@@ -43,5 +40,30 @@
 
     <br>
     <a href="coop.html">Volver a registrar Chicken Coop</a>
+
+    <script src="../js/main.js"></script>
+    <script>
+        async function loadCoops() {
+            const response = await fetch("../php/get_coops.php"); // API para listar coops
+            const data = await response.json();
+            const select = document.getElementById("coop_id");
+            data.forEach(c => {
+                let option = document.createElement("option");
+                option.value = c.id_coop;
+                option.text = "Coop ID " + c.id_coop;
+                select.add(option);
+            });
+        }
+        loadCoops();
+
+        const form = document.getElementById("chickenForm");
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const result = await saveChicken(formData);
+            alert(result.message);
+            form.reset();
+        });
+    </script>
 </body>
 </html>

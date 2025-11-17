@@ -6,20 +6,17 @@
     <link rel="stylesheet" href="../css/menu.css">
 </head>
 <body>
-
-    <head>
-        <nav>
-            <ul>
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="coop.html">Chicken Coop</a></li>
-                <li><a href="chicken.html">Chicken</a></li>
-            </ul>
-        </nav>
-    </head>
+    <nav>
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="coop.html">Chicken Coop</a></li>
+            <li><a href="chicken.html">Chicken</a></li>
+        </ul>
+    </nav>
 
     <h1>Registrar Farmer</h1>
 
-    <form action="#" method="post">
+    <form id="farmerForm">
         <label for="name">Nombre del Farmer:</label><br>
         <input type="text" id="name" name="name" required><br><br>
 
@@ -28,5 +25,17 @@
 
     <br>
     <a href="coop.html">Ir a registrar Chicken Coop</a>
+
+    <script src="../js/main.js"></script>
+    <script>
+        const form = document.getElementById("farmerForm");
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const result = await saveFarmer(formData);
+            alert(result.message);
+            form.reset();
+        });
+    </script>
 </body>
 </html>

@@ -6,24 +6,21 @@
     <link rel="stylesheet" href="../css/menu.css">
 </head>
 <body>
-
-    <head>
-        <nav>
-            <ul>
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="farmer.html">Framer chicken</a></li>
-                <li><a href="chicken.html">Chicken</a></li>
-            </ul>
-        </nav>
-    </head>
+    <nav>
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="farmer.html">Farmer</a></li>
+            <li><a href="chicken.html">Chicken</a></li>
+        </ul>
+    </nav>
 
     <h1>Registrar Chicken Coop</h1>
 
-    <form action="#" method="post">
+    <form id="coopForm">
         <label for="farmer_id">Farmer propietario:</label><br>
         <select id="farmer_id" name="farmer_id" required>
             <option value="">Seleccione un Farmer</option>
-            <!-- Opciones se llenarán desde la base de datos -->
+            <!-- Opciones se llenarán desde JS/Fetch -->
         </select><br><br>
 
         <button type="submit">Guardar Chicken Coop</button>
@@ -32,5 +29,30 @@
     <br>
     <a href="farmer.html">Volver a registrar Farmer</a><br>
     <a href="chicken.html">Ir a registrar Chicken</a>
+
+    <script src="../js/main.js"></script>
+    <script>
+        async function loadFarmers() {
+            const response = await fetch("../php/get_farmers.php"); // API para listar farmers
+            const data = await response.json();
+            const select = document.getElementById("farmer_id");
+            data.forEach(f => {
+                let option = document.createElement("option");
+                option.value = f.id_farmer;
+                option.text = f.name_farmer;
+                select.add(option);
+            });
+        }
+        loadFarmers();
+
+        const form = document.getElementById("coopForm");
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const result = await saveCoop(formData);
+            alert(result.message);
+            form.reset();
+        });
+    </script>
 </body>
 </html>
